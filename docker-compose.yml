@@ -1,0 +1,38 @@
+version: '3.6'
+
+services:
+  balancer:
+    build: .
+    volumes:
+      - ./balancer/nginx.conf:/etc/nginx/nginx.conf:ro      
+      - ./GeoIP:/var/lib/GeoIP/  
+    ports:
+      - 80:80 
+
+  app_UK:
+    image: nginx:latest
+    volumes:
+      - ./app/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./UK/index.html:/usr/share/nginx/html/index.html    
+
+  app_US1:
+    image: nginx:latest
+    volumes:
+      - ./app/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./US/index.html:/usr/share/nginx/html/index.html   
+
+  app_US2:
+    image: nginx:latest
+    volumes:
+      - ./app/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./US/index.html:/usr/share/nginx/html/index.html    
+
+  app_rest:
+    image: nginx:latest
+    volumes:
+      - ./app/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./rest/index.html:/usr/share/nginx/html/index.html
+
+  test:
+    image: nginx:latest   
+
